@@ -6,7 +6,7 @@
 #include <memory>
 
 #include "Types.h"
-#include "ProcessingOperation.h"
+#include <Processor/ProcessingOperation.h>
 
 struct Rules {
     std::vector<std::string> inputs;

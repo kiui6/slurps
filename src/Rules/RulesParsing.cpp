@@ -1,5 +1,7 @@
 #include "RulesParsing.h"
 
+#include <charconv>
+
 const std::unordered_map<std::string, bool (*)(const ArgParser::Argument&, Rules&, std::string&)> RuleParserList::m_list = {
     {"output", RuleParserList::ParseOutput},
     {"format", RuleParserList::ParseFormat},
@@ -62,9 +64,40 @@ bool RuleParserList::ParseResampleMode(const ArgParser::Argument &arg, Rules &ru
 
 bool RuleParserList::ParseNewWidthHeight(const ArgParser::Argument &arg, Rules &rules, std::string &error)
 {
+    if(!arg.value.has_value()) {
+        error = "No new dimensions provided.";
+        return false;
+    }
+    
+    std::string_view valueView = *arg.value;
+    size_t colonPos = valueView.find_first_of(':');
+    if (colonPos == std::string_view::npos || 
+        colonPos == 0 || 
+        colonPos == valueView.size() - 1 || 
+        valueView.find_first_of(':', colonPos+1) != std::string_view::npos) 
+    {
+        error = "Incorrect new dimensions format. Use <Width>:<Height>. \nExample: 512:512";
+        return false;
+    }
+
+    std::string_view left = valueView.substr(0, colonPos);
+    std::string_view right = valueView.substr(colonPos + 1);
+
+    uint64_t width, height;
+    auto [ptrW, ecW] = std::from_chars(left.data(), left.data() + left.size(), width);
+    auto [ptrH, ecH] = std::from_chars(right.data(), right.data() + right.size(), height);
+    if (ecW != std::errc() || ptrW != left.data() + left.size() ||
+        ecH != std::errc() || ptrH != right.data() + right.size()) 
+    {
+        error = "Couldn't read new dimensions. Only integer numbers are supported";
+        return false;
+    }
+
     auto operation = std::make_unique<NewWidthHighProcessingOperation>();
 
     operation->ResampleMode = rules.ResampleMode;
+    operation->outputWidth = width;
+    operation->outputHeight = height;
 
     rules.processingOperations.emplace_back(std::move(operation));
     return true;

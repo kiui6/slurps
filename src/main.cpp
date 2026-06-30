@@ -44,14 +44,13 @@ int main(int argc, char* argv[])
             
             // Process
             Processor processor(std::move(img));
-
-            const Image& result = processor
-                .SetInterpolationQuality(kCGInterpolationNone)
-                .NewWidthHeight(128, 128)
-                .Finalize();
+            
+            for(const auto& operation : rules.processingOperations) {
+                processor.PerformOperation(operation.get());
+            }
 
             // Save to disk
-            ImageSerializer::SaveImageFile(result, outputPath, rules.outputType);
+            ImageSerializer::SaveImageFile(processor.Finalize(), outputPath, rules.outputType);
             std::cout << " [OK]\n";
         } catch(const std::runtime_error& exc) {
             std::cout << " [FAILED]\n";

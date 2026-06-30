@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Image/Image.h>
+#include "ProcessingOperation.h"
 
 class Processor {
     Image m_img{};
@@ -18,6 +19,8 @@ public:
     Processor& SetColorSpace(CFStringRef colorspaceName);
     Processor& SetInterpolationQuality(CGInterpolationQuality interpolation) {m_interpolation = interpolation; return *this;}
     Processor& NewWidthHeight(uint64_t width, uint64_t height);
+
+    Processor& PerformOperation(ProcessingOperation* operation);
 
     const Image& Finalize() { return m_img; }
 };

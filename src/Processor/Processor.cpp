@@ -77,3 +77,33 @@ Processor &Processor::NewWidthHeight(uint64_t width, uint64_t height)
     
     return *this;
 }
+
+Processor &Processor::PerformOperation(ProcessingOperation *operation)
+{
+    if(!operation) {
+        throw std::runtime_error("Processor: Passed nullptr as operation");
+    }
+
+    switch(operation->type) {
+        case ProcessingOpType::NewWidthHeight:
+            switch(((NewWidthHighProcessingOperation*)operation)->ResampleMode) {
+                case ResampleMode::Nearest:
+                    SetInterpolationQuality(kCGInterpolationNone);
+                    break;
+                case ResampleMode::Bilinear:
+                    SetInterpolationQuality(kCGInterpolationLow);
+                    break;
+                case ResampleMode::Trilinear:
+                    SetInterpolationQuality(kCGInterpolationMedium);
+                    break;
+                default:
+                    SetInterpolationQuality(kCGInterpolationDefault);
+            }
+            NewWidthHeight(((NewWidthHighProcessingOperation*)operation)->outputWidth, ((NewWidthHighProcessingOperation*)operation)->outputHeight);
+            break;
+        default:
+            throw std::runtime_error("Processor: Unsupported operation type!");
+    }
+
+    return *this;
+}
