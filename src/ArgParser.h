@@ -9,7 +9,10 @@
 class ArgParser {
     struct Argument {
         std::string key;
-        std::optional<std::string_view> value;
+        std::optional<std::string> value;
+
+        Argument(std::string_view k, std::optional<std::string> v) :key(k), value(v) {}
+        Argument(std::string_view k, std::string_view v) :key(k), value(v) {}
     };
 
     std::vector<Argument> m_arguments;
@@ -28,12 +31,12 @@ public:
                     bExpectValue = true;
                 } else if(arg.starts_with("-")) {
                     arg.remove_prefix(1);
-                    m_arguments.emplace_back({arg, std::nullopt});  
+                    m_arguments.emplace_back(arg, std::nullopt);  
                 } else {
                     m_inputs.emplace_back(arg);
                 }
             } else {
-                m_arguments.emplace_back({pendingKey, arg});
+                m_arguments.emplace_back(pendingKey, arg);
                 bExpectValue = false;
             }
         }
