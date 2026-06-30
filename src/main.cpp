@@ -12,22 +12,6 @@
 #include "Rules/Validator.h"
 #include "Rules/RulesParsing.hpp"
 
-static CGImageRef resize_nearest(CGImageRef src, size_t newW, size_t newH) {
-    CGColorSpaceRef cs = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
-    CGContextRef ctx = CGBitmapContextCreate(NULL, newW, newH, 8, newW * 4, cs, kCGImageAlphaPremultipliedLast);
-    CGColorSpaceRelease(cs);
-    if (!ctx) return NULL;
-
-    
-    
-    CGContextSetInterpolationQuality(ctx, kCGInterpolationNone);
-    CGContextDrawImage(ctx, CGRectMake(0, 0, newW, newH), src);
-    
-    CGImageRef dst = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
-    return dst;
-}
-
 void PrintUsage() {
     std::cerr << "usage: slurps <Inputs> --output <Path> [-flags] [--argument <value>]\n\n";
     std::cerr << "\t--resample-mode <nearest/bilinear> - Specify resampling mode for operations\n\n";
