@@ -10,14 +10,14 @@
 #include "Serializer/Serializer.h"
 #include "Rules/Rules.h"
 #include "Rules/Validator.h"
-#include "Rules/RulesParsing.hpp"
+#include "Rules/RulesParsing.h"
 
 void PrintUsage() {
     std::cerr << "usage: slurps <Inputs> --output <Path> [-flags] [--argument <value>]\n\n";
-    std::cerr << "\t--resample-mode <nearest/bilinear> - Specify resampling mode for operations\n\n";
+    std::cerr << "\t--resampleMode <nearest/bilinear> - Specify resampling mode for operations\n\n";
     std::cerr << "\t--newWidthHeight <Width>:<Height> - Change width & height of an image\n\n";
     std::cerr << "\t--output <Path> - Path for the output file. Available templates:\n\n";
-    std::cerr << "\t\t<Counter> - A counter number increasing with each processed file.\n";
+    std::cerr << "\t\t<INDEX> - A counter number increasing with each processed file.\n";
 }
 
 int main(int argc, char* argv[])

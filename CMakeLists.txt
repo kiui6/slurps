@@ -9,7 +9,7 @@ find_library(COREGRAPHICS_LIB  CoreGraphics  FRAMEWORK REQUIRED)
 find_library(IMAGEIO_LIB       ImageIO       FRAMEWORK REQUIRED)
 
 add_executable(slurps "src/main.cpp" "src/Image/Image.cpp" "src/Processor/Processor.cpp" 
-    "src/Serializer/Serializer.cpp")
+    "src/Serializer/Serializer.cpp" "src/Rules/RulesParsing.cpp")
 
 target_link_libraries(slurps PRIVATE
     ${COREFOUNDATION_LIB}

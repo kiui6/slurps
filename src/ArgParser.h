@@ -7,6 +7,7 @@
 #include <unordered_map>
 
 class ArgParser {
+public:
     struct Argument {
         std::string key;
         std::optional<std::string> value;
@@ -14,7 +15,7 @@ class ArgParser {
         Argument(std::string_view k, std::optional<std::string> v) :key(k), value(v) {}
         Argument(std::string_view k, std::string_view v) :key(k), value(v) {}
     };
-
+private:
     std::vector<Argument> m_arguments;
     std::vector<std::string> m_inputs;
 public:
@@ -65,4 +66,5 @@ public:
     }
 
     const std::vector<std::string>& GetInputs() const {return m_inputs;}
+    const std::vector<Argument>& GetArguments() const {return m_arguments;}
 };

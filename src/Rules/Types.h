@@ -1,6 +1,7 @@
 #pragma once
 
 enum class ImageType {
+    Auto,
     PNG,
     JPEG,
     ICNS,

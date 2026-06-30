@@ -12,8 +12,10 @@ struct Rules {
     std::vector<std::string> inputs;
     std::string output;
     
-    ImageType inputType = ImageType::PNG;
-    ImageType outputType = ImageType::PNG;
+    ImageType inputType = ImageType::Auto;
+    ImageType outputType = ImageType::Auto;
+
+    ResampleMode ResampleMode = ResampleMode::Bilinear;
 
     std::vector<std::unique_ptr<ProcessingOperation>> processingOperations;
 
