@@ -32,7 +32,8 @@ public:
                     bExpectValue = true;
                 } else if(arg.starts_with("-")) {
                     arg.remove_prefix(1);
-                    m_arguments.emplace_back(arg, std::nullopt);  
+                    pendingKey = arg;
+                    bExpectValue = true;
                 } else {
                     m_inputs.emplace_back(arg);
                 }

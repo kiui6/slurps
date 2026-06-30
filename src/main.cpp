@@ -14,10 +14,11 @@
 
 void PrintUsage() {
     std::cerr << "usage: slurps <Inputs> --output <Path> [-flags] [--argument <value>]\n\n";
-    std::cerr << "\t--resampleMode <nearest/bilinear> - Specify resampling mode for operations\n\n";
-    std::cerr << "\t--newWidthHeight <Width>:<Height> - Change width & height of an image\n\n";
-    std::cerr << "\t--output <Path> - Path for the output file. Available templates:\n\n";
-    std::cerr << "\t\t<INDEX> - A counter number increasing with each processed file.\n";
+    std::cerr << "    -r, --resampleMode <nearest/bilinear> - Specify resampling mode for operations\n\n";
+    std::cerr << "    -f, --format <png, jpeg, icns> - Specify resampling mode for operations\n\n";
+    std::cerr << "    -z, --newWidthHeight <Width>:<Height> - Change width & height of an image\n\n";
+    std::cerr << "    -o, --output <Path> - Templated path for the output file. Available templates:\n";
+    std::cerr << "                 <INDEX> - A counter number increasing with each processed file.\n";
 }
 
 int main(int argc, char* argv[])
@@ -44,7 +45,7 @@ int main(int argc, char* argv[])
             
             // Process
             Processor processor(std::move(img));
-            
+
             for(const auto& operation : rules.processingOperations) {
                 processor.PerformOperation(operation.get());
             }

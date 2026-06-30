@@ -4,9 +4,16 @@
 
 const std::unordered_map<std::string, bool (*)(const ArgParser::Argument&, Rules&, std::string&)> RuleParserList::m_list = {
     {"output", RuleParserList::ParseOutput},
+    {"o", RuleParserList::ParseOutput},
+
     {"format", RuleParserList::ParseFormat},
+    {"f", RuleParserList::ParseFormat},
+
     {"resampleMode", RuleParserList::ParseResampleMode},
+    {"r", RuleParserList::ParseResampleMode},
+
     {"newWidthHeight", RuleParserList::ParseNewWidthHeight},
+    {"z", RuleParserList::ParseNewWidthHeight},
 };
 
 bool RuleParserList::ParseOutput(const ArgParser::Argument &arg, Rules &rules, std::string &error)
