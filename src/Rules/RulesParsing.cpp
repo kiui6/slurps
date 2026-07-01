@@ -33,7 +33,6 @@ bool RuleParserList::ParseFormat(const ArgParser::Argument &arg, Rules &rules, s
         return false;
     }
 
-
     if(*arg.value == "png"){
         rules.outputType = ImageType::PNG; 
     } else if(*arg.value == "jpg" || *arg.value == "jpeg"){
