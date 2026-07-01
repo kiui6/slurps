@@ -20,6 +20,9 @@ target_link_libraries(slurps PRIVATE
 target_compile_options(slurps PRIVATE -mmacosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET})
 target_link_options(slurps PRIVATE -mmacosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET})
 
+target_compile_options(slurps PRIVATE -fno-rtti -ffunction-sections -fdata-sections)
+target_link_options(slurps PRIVATE -Wl,-dead_strip -Wl,-s -Wl,-S)
+
 target_compile_features(slurps PRIVATE cxx_std_20)
 
 target_include_directories(slurps PRIVATE "src")

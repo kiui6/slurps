@@ -19,11 +19,12 @@ void PrintUsage() {
     std::cerr << "    -f, --format <png, jpeg, icns> - Specify resampling mode for operations\n\n";
     std::cerr << "    -z, --newWidthHeight <Width>:<Height> - Change width & height of an image\n\n";
     std::cerr << "    -o, --output <Path> - Templated path for the output file. Available templates:\n";
-    std::cerr << "                 <INDEX> - A counter number increasing with each processed file.\n";
-    std::cerr << "                 <BASENAME> - Original name of the input file without extension.\n";
-    std::cerr << "                 <EXT> - Original extension of the input file.\n";
-    std::cerr << "                 <WIDTH> - Width of the output file.\n";
-    std::cerr << "                 <HEIGHT> - Height of the output file.\n";
+    std::cerr << "                 {COUNT} - A counter number increasing with each processed file, starting from 1.\n";
+    std::cerr << "                 {INDEX} - A counter number increasing with each processed file, starting from 0.\n";
+    std::cerr << "                 {BASENAME} - Original name of the input file without extension.\n";
+    std::cerr << "                 {EXT} - Original extension of the input file.\n";
+    std::cerr << "                 {WIDTH} - Width of the output file.\n";
+    std::cerr << "                 {HEIGHT} - Height of the output file.\n";
 }
 
 int main(int argc, char* argv[])
@@ -56,7 +57,7 @@ int main(int argc, char* argv[])
             }
 
             // Save to disk
-            ImageSerializer::SaveImageFile(processor.Finalize(), , rules.outputType);
+            ImageSerializer::SaveImageFile(processor.Finalize(), outputPath, rules.outputType);
             std::cout << " [OK]\n";
         } catch(const std::runtime_error& exc) {
             std::cout << " [FAILED]\n";
