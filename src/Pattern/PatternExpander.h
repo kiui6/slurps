@@ -52,6 +52,6 @@ public:
             result.replace(pos, 5, std::to_string(inputExtension));
         }
 
-        return pattern;
+        return result;
     }
 };
